@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviewer-api
+  namespace: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: reviewer-api
+  template:
+    metadata:
+      labels:
+        app: reviewer-api
+        aadpodidbinding: reviewer-api-label
+    spec:
+      containers:
+      - name: reviewer-api
+        image: acrreviewer.azurecr.io/reviewer/api:v1.0
+        ports:
+        - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviewer-ui
+  namespace: jasoncabot-me
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: reviewer-ui
+  template:
+    metadata:
+      labels:
+        app: reviewer-ui
+        aadpodidbinding: reviewer-ui-label
+    spec:
+      containers:
+      - name: reviewer-ui
+        image: acrreviewer.azurecr.io/reviewer/ui:v1.0
+        ports:
+        - containerPort: 3000

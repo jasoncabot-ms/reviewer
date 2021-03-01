@@ -1,0 +1,46 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reviewer-api
+  namespace: prod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - reviewerapi.jasoncabot.me
+  rules:
+  - host: reviewerapi.jasoncabot.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: reviewer-api
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reviewer-api
+  namespace: prod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - reviewer.jasoncabot.me
+  rules:
+  - host: reviewer.jasoncabot.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: reviewer-ui
+            port:
+              number: 80

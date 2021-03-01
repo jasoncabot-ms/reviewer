@@ -1,0 +1,131 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build - api",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/api/Reviewer.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/api/Reviewer.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/api/Reviewer.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build - api"
+            ],
+            "dockerBuild": {
+                "tag": "api:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/api/Dockerfile",
+                "context": "${workspaceFolder}/api",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/api/Reviewer.API.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build - api"
+            ],
+            "dockerBuild": {
+                "tag": "api:latest",
+                "dockerfile": "${workspaceFolder}/api/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/api/Reviewer.API.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/api/Reviewer.API.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/api/Reviewer.API.csproj"
+            }
+        },
+        {
+            "label": "npm: start - ui",
+            "dependsOn": "npm: install - ui",
+            "type": "npm",
+            "script": "start",
+            "path": "ui/",
+            "problemMatcher": [
+                {
+                    "owner": "custom",
+                    "pattern": {
+                        "regexp": "^$"
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Compiling...",
+                        "endsPattern": "Compiled .*"
+                    }
+                }
+            ],
+            "detail": "react-scripts start",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/ui"
+            }
+        },
+        {
+            "type": "npm",
+            "script": "install",
+            "path": "ui/",
+            "problemMatcher": [],
+            "label": "npm: install - ui",
+            "detail": "install dependencies from package"
+        }
+    ]
+}

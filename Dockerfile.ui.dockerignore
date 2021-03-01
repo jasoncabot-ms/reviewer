@@ -1,0 +1,13 @@
+.github
+.devcontainer
+.vscode
+api
+manifests
+.git
+.gitignore
+Dockerfile.api
+Dockerfile.api.dockerignore
+Dockerfile.ui
+Dockerfile.ui.dockerignore
+LICENSE
+README.md
