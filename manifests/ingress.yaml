@@ -9,9 +9,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - reviewerapi.jasoncabot.me
+    - api.reviewer.51.105.22.227.nip.io
   rules:
-  - host: reviewerapi.jasoncabot.me
+  - host: api.reviewer.51.105.22.227.nip.io
     http:
       paths:
       - path: /
@@ -32,9 +32,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - reviewer.jasoncabot.me
+    - ui.reviewer.51.105.22.227.nip.io
   rules:
-  - host: reviewer.jasoncabot.me
+  - host: ui.reviewer.51.105.22.227.nip.io
     http:
       paths:
       - path: /
