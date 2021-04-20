@@ -6,6 +6,7 @@ on:
   push:
     branches: [ main ]
     paths:
+    - '.github/workflows/deploy-to-k8s.yml'
     - 'manifests/**.yaml'
 
 jobs:
