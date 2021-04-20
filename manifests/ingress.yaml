@@ -5,11 +5,13 @@ metadata:
   name: reviewer-api
   namespace: prod
   annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
   - hosts:
     - api.reviewer.51.105.22.227.nip.io
+    secretName: reviewer-api-key
   rules:
   - host: api.reviewer.51.105.22.227.nip.io
     http:
@@ -28,11 +30,13 @@ metadata:
   name: reviewer-ui
   namespace: prod
   annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
   - hosts:
     - ui.reviewer.51.105.22.227.nip.io
+    secretName: reviewer-ui-key
   rules:
   - host: ui.reviewer.51.105.22.227.nip.io
     http:
