@@ -25,7 +25,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reviewer-ui
-  namespace: jasoncabot-me
+  namespace: prod
 spec:
   replicas: 3
   selector:
