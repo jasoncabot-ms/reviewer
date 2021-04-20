@@ -33,7 +33,13 @@ Create Kubernetes Cluster
 - Create ACR
 - Create Log Analytics Workspace
 
-Create Managed Identity for the API
+Create Managed Identity for the API and UI
+
+```
+az identity create -g rg-reviewer -n id-reviewer-api
+az identity create -g rg-reviewer -n id-reviewer-ui
+```
+
 - grant RBAC to blob storage - Azure Blob Data Contributor
 - create contained user in Azure SQL
 

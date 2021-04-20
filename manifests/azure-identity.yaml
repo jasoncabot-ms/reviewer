@@ -20,6 +20,6 @@ metadata:
   namespace: prod
 spec:
   type: 0 # MSI
-  resourceID: /subscriptions/04fe963c-dced-4688-9372-1be7f86c986f/resourcegroups/rg-reviewer/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-reviewer-api
+  resourceID: /subscriptions/04fe963c-dced-4688-9372-1be7f86c986f/resourceGroups/rg-reviewer/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-reviewer-ui
   clientID: 817876d7-dd6f-444c-bfbd-9f4139a1a2b5
 ---
