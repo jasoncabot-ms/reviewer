@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - api.reviewer.51.105.22.227.nip.io
+    - reviewerapi.mrcabot.com
     secretName: reviewer-api-key
   rules:
-  - host: api.reviewer.51.105.22.227.nip.io
+  - host: reviewerapi.mrcabot.com
     http:
       paths:
       - path: /
@@ -35,10 +35,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - ui.reviewer.51.105.22.227.nip.io
+    - reviewer.mrcabot.com
     secretName: reviewer-ui-key
   rules:
-  - host: ui.reviewer.51.105.22.227.nip.io
+  - host: reviewer.mrcabot.com
     http:
       paths:
       - path: /
