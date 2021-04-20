@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: reviewer-api
-        image: acrreviewer.azurecr.io/reviewer/api:v1.0
+        image: acrreviewer.azurecr.io/reviewer/api:v1.1
         ports:
         - containerPort: 5000
 ---
@@ -39,6 +39,6 @@ spec:
     spec:
       containers:
       - name: reviewer-ui
-        image: acrreviewer.azurecr.io/reviewer/ui:v1.0
+        image: acrreviewer.azurecr.io/reviewer/ui:v1.1
         ports:
         - containerPort: 3000
