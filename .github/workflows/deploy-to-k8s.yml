@@ -35,12 +35,6 @@ jobs:
           cluster-name: ${{ secrets.CLUSTER_NAME }}
           resource-group: ${{ secrets.RESOURCE_GROUP }}
           
-      - name: Deploy default
-        uses: Azure/k8s-deploy@v1.4
-        with:
-          namespace: 'default'
-          manifests: manifests/default/*.yaml
-          
       - name: Deploy cert-manager
         uses: Azure/k8s-deploy@v1.4
         with:
