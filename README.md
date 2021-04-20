@@ -36,3 +36,15 @@ Create Kubernetes Cluster
 Create Managed Identity for the API
 - grant RBAC to blob storage - Azure Blob Data Contributor
 - create contained user in Azure SQL
+
+
+# GitHub Actions
+
+Create a service principal with 'only' contributor access to our cluster that GitHub can assume and deploy our resources
+
+
+```
+az ad sp create-for-rbac --sdk-auth --skip-assignment --name aks-reviewer-deployment-principal
+
+az role assignment create --assignee <ClientId> --scope <AKSId> --role Contributor
+```

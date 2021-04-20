@@ -29,10 +29,11 @@ jobs:
         uses: Azure/setup-kubectl@v1
 
       - uses: azure/aks-set-context@v1
+        id: login
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
-          cluster-name: ${{ env.CLUSTER_NAME }}
-          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.CLUSTER_NAME }}
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
           
       - uses: Azure/k8s-deploy@v1.4
         with:
