@@ -20,6 +20,13 @@ spec:
         image: acrreviewer.azurecr.io/reviewer/api:v1.1
         ports:
         - containerPort: 5000
+        env:
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: "Production"
+        - name: "ASPNETCORE_FORWARDEDHEADERS_ENABLED"
+          value: "true"
+        - name: "AllowedOrigin"
+          value: "https://reviewer.mrcabot.com"
 ---
 apiVersion: apps/v1
 kind: Deployment
