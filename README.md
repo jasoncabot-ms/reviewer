@@ -22,9 +22,11 @@ az ad app create --display-name="Reviewer" \
 
 Create SQL Server + Database
 - Enable Azure AD Auth: https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/tutorial-windows-vm-access-sql#enable-azure-ad-authentication
+
+```
 CREATE USER [id-reviewer-api] FROM EXTERNAL PROVIDER
 ALTER ROLE db_datareader ADD MEMBER [id-reviewer-api]
-
+```
 
 Create Azure Storage Account (reviewer...)
 - Create container inside (images)

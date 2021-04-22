@@ -18,13 +18,13 @@ export const ItemDetails = () => {
             <div className="container mt-5">
                 <div className="container">
                     <h1>{data.name}</h1>
-                    <img src={data.imageURI} alt="{data.name}" />
+                    <img src={data.imageURI} alt="{data.name}" className="img-fluid" />
                     <div>{data.description}</div>
                 </div>
                 <div className="container mt-5">
                     <h2>Reviews</h2>
                     <Link to={"/items/" + id + "/review"} className="btn btn-primary mt-3 mb-3">Add Review</Link>
-                    {(data.reviews ?? []).map((review) => <ReviewCard review={review} />)}
+                    {(data.reviews ?? []).map((review) => <ReviewCard key={review.id} review={review} />)}
                 </div>
             </div>
         );

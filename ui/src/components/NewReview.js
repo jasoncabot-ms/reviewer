@@ -36,7 +36,6 @@ class ReviewForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("POST TO URL");
 
         send(`${process.env.REACT_APP_API_ENDPOINT}/Reviews`, JSON.stringify(this.state, null, 0));
     }
