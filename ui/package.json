@@ -10,6 +10,7 @@
     "is-svg": ">=4.2.2",
     "jquery": "^3.5.1",
     "msal": "^1.4.6",
+    "postcss": ">=8.2.10",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-aad-msal": "^2.3.5",
