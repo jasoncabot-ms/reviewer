@@ -9,7 +9,7 @@ import { ReviewCard } from './ReviewCard';
 
 export const ItemDetails = () => {
     const { id } = useParams();
-    const { loading, data } = useFetch(`${process.env.REACT_APP_API_ENDPOINT}/Items/${id}`);
+    const { loading, data } = useFetch(`${window.ENV.API_ENDPOINT}/Items/${id}`);
 
     if (loading) {
         return (<div className="container mt-5">Loading...</div>);

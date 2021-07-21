@@ -27,7 +27,7 @@ const ItemListItem = ({ item: { id, name, imageURI, description, reviews } }) =>
 }
 
 export const ItemList = () => {
-    const { loading, data } = useFetch(`${process.env.REACT_APP_API_ENDPOINT}/Items`);
+    const { loading, data } = useFetch(`${window.ENV.API_ENDPOINT}/Items`);
 
     return (
         <div className="container">

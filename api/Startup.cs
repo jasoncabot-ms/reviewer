@@ -1,16 +1,20 @@
 using System;
+using Azure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
 using Reviewer.API.Models;
-using Microsoft.Extensions.Azure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Azure.Identity;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace Reviewer.API
 {
@@ -66,6 +70,11 @@ namespace Reviewer.API
             {
                 options.Authority = Configuration.GetValue<String>("Authorization.Authority");
                 options.Audience = Configuration.GetValue<String>("Authorization.Audience");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerValidator = MultitenantWildcardIssuerValidator,
+                    NameClaimType = "name"
+                };
             });
         }
 
@@ -90,6 +99,34 @@ namespace Reviewer.API
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static string MultitenantWildcardIssuerValidator(string issuer, SecurityToken token, TokenValidationParameters parameters)
+        {
+            if (token is JwtSecurityToken jwt)
+            {
+                var tokenTenantId = jwt.Claims.Where(c => c.Type == "tid").FirstOrDefault().Value;
+                if (issuer == $"https://login.microsoftonline.com/{tokenTenantId}/v2.0")
+                {
+                    return issuer;
+                }
+            }
+
+            // Recreate the exception that is thrown by default
+            // when issuer validation fails
+            var validIssuer = parameters.ValidIssuer ?? "null";
+            var validIssuers = parameters.ValidIssuers == null
+                ? "null"
+                : !parameters.ValidIssuers.Any()
+                    ? "empty"
+                    : string.Join(", ", parameters.ValidIssuers);
+            string errorMessage = FormattableString.Invariant(
+                $"IDX10205: Issuer validation failed. Issuer: '{issuer}'. Did not match: validationParameters.ValidIssuer: '{validIssuer}' or validationParameters.ValidIssuers: '{validIssuers}'.");
+
+            throw new SecurityTokenInvalidIssuerException(errorMessage)
+            {
+                InvalidIssuer = issuer
+            };
         }
     }
 }

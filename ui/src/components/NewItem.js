@@ -40,7 +40,7 @@ class ItemForm extends React.Component {
         formData.append("description", this.state.description);
         formData.append("image", this.imageInput.current.files[0]);
 
-        send(`${process.env.REACT_APP_API_ENDPOINT}/Items`, formData);
+        send(`${window.ENV.API_ENDPOINT}/Items`, formData);
     }
 
     render() {

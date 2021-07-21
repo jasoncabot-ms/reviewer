@@ -9,12 +9,11 @@ Items >-- Review
 
 
 
-Create an app for the frontend UI
+Create an app for the frontend UI. After creation change the access token version in the manifest to v2. Ensure that reply-urls are set as SPA rather than Web.
 
 ```
-az ad app create --display-name="Reviewer" \
-    --oauth2-allow-implicit-flow=true \
-    --reply-urls="http://localhost:3000" \
+az ad app create --display-name="Item Reviewer" \
+    --reply-urls="http://localhost:3000/" \
     --available-to-other-tenants=true \
     --query "appId" -o tsv
 

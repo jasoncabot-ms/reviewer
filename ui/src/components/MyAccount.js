@@ -1,43 +1,43 @@
 
 import React from "react";
+
+import { useMsal } from "@azure/msal-react";
+
+import { MsalAuthenticationTemplate } from "@azure/msal-react";
+import { InteractionType } from "@azure/msal-browser";
+
 import { useFetch } from './../providers/fetchProvider';
-import { authProvider } from './../providers/authProvider';
-import { AzureAD, AuthenticationState } from 'react-aad-msal';
 import { ReviewCard } from './ReviewCard';
 
-export const MyAccount = () => {
-    const { loading, data } = useFetch(`${process.env.REACT_APP_API_ENDPOINT}/Reviews`);
-
-    const inner = (account) => {
-        if (loading) {
-            return (<div>Loading...</div>);
-        } else {
-            return (
-                <div className="container mt-5">
-                    <h1>{account.name}</h1>
-                    <div className="container mt-5">
-                        <h2>Reviews</h2>
-                        {(data ?? []).map((review) => <ReviewCard review={review} />)}
-                    </div>
-                </div>
-            );
-        }
-    };
-
+const ErrorComponent = ({ error }) => {
+    return <p>An Error Occurred: {error}</p>;
+}
+const LoadingComponent = () => {
     return (
-        <AzureAD provider={authProvider} forceLogin={false}>
-            {
-                ({ authenticationState, accountInfo }) => {
-                    switch (authenticationState) {
-                        case AuthenticationState.Authenticated:
-                            return (inner(accountInfo.account));
-                        case AuthenticationState.Unauthenticated:
-                            return (<div className="container mt-5">You need to login</div>);
-                        default:
-                            return (<div />);
-                    }
-                }
-            }
-        </AzureAD>
+        <p>
+            Loading your account information...
+        </p>
     );
 }
+export const MyAccount = () => {
+    const { instance } = useMsal();
+    const { loading, data } = useFetch(`${window.ENV.API_ENDPOINT}/Reviews`);
+    const authRequest = { scopes: ["openid", "profile"] };
+
+    return (
+        <div className="container mt-5">
+            <h1>My Account</h1>
+            <MsalAuthenticationTemplate
+                interactionType={InteractionType.Redirect}
+                authenticationRequest={authRequest}
+                errorComponent={ErrorComponent}
+                loadingComponent={LoadingComponent}
+            >
+                <h2 className="mt-5">Reviews by {instance.getActiveAccount().name}</h2>
+                {loading ? <div>Loading...</div> :
+                    (data ?? []).map((review) => <ReviewCard key={review.id} review={review} />)
+                }
+            </MsalAuthenticationTemplate>
+        </div >
+    )
+};

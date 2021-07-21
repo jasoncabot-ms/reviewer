@@ -1,3 +1,4 @@
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
       - name: reviewer-api
-        image: acrreviewer.azurecr.io/reviewer/api:v1.1
+        image: ghcr.io/jasoncabot-ms/reviewer/api:v1.2
         ports:
         - containerPort: 5000
         env:
@@ -46,6 +47,9 @@ spec:
     spec:
       containers:
       - name: reviewer-ui
-        image: acrreviewer.azurecr.io/reviewer/ui:v1.1
+        image: ghcr.io/jasoncabot-ms/reviewer/ui:v1.2
         ports:
         - containerPort: 3000
+        env:
+        - name: "API_ENDPOINT"
+          value: "https://reviewerapi.mrcabot.com/api"

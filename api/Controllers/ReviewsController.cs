@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,14 @@ namespace Reviewer.API.Controllers
 
         // GET: api/Reviews
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
-            return await _context.Reviews.Include(r => r.Item).ToListAsync();
+            String oid = User.Claims.Where(claim => claim.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            String tid = User.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/identity/claims/tenantid").FirstOrDefault().Value;
+            return await _context.Reviews
+                .Where(r => r.CreatedById == oid && r.CreatedByTenantId == tid)
+                .Include(r => r.Item).ToListAsync();
         }
 
         // POST: api/Reviews
@@ -35,7 +41,9 @@ namespace Reviewer.API.Controllers
         {
             var review = new Review()
             {
-                CreatedBy = this.User.Identity.Name,
+                CreatedBy = User.Identity.Name,
+                CreatedById = User.Claims.Where(claim => claim.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value,
+                CreatedByTenantId = User.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/identity/claims/tenantid").FirstOrDefault().Value,
                 Text = form.Text,
                 Rating = form.Rating,
                 Item = _context.Items.Find(form.ItemId)
@@ -43,12 +51,7 @@ namespace Reviewer.API.Controllers
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetReview", new { id = review.Id }, review);
-        }
-
-        private bool ReviewExists(int id)
-        {
-            return _context.Reviews.Any(e => e.Id == id);
+            return CreatedAtAction("GetItem", "Items", new { id = form.ItemId }, review);
         }
     }
 }

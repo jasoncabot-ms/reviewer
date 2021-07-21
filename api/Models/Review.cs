@@ -9,6 +9,11 @@ namespace Reviewer.API.Models
         public int Id { get; set; }
         public String Text { get; set; }
         public String CreatedBy { get; set; }
+        [JsonIgnore]
+        public String CreatedById { get; set; }
+        [JsonIgnore]
+        public String CreatedByTenantId { get; set; }
+
         public int Rating { get; set; }
         [ForeignKey("ItemId")]
         [JsonIgnore]

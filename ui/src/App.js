@@ -1,4 +1,5 @@
 import React from "react";
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 
 import {
   BrowserRouter as Router,
@@ -7,15 +8,52 @@ import {
   NavLink
 } from "react-router-dom";
 
-import { ItemDetails, ItemList, NewItem, MyAccount } from './components';
-
-import { authProvider } from './providers/authProvider';
-import { AzureAD, AuthenticationState } from 'react-aad-msal';
+import {
+  ItemDetails
+  , ItemList
+  , NewItem
+  , MyAccount
+  , NewReview
+} from './components';
 
 import './App.css';
-import { NewReview } from "./components/NewReview";
 
-export default function App() {
+const AuthenticatedDropDown = () => {
+  const { instance } = useMsal();
+
+  const logout = () => {
+    instance.logout();
+  }
+
+  return (
+    <li className="nav-item dropdown">
+      <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {instance.getActiveAccount().name}
+      </a>
+      <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a className="dropdown-item" href="/my-account">My Account</a>
+        <div className="dropdown-divider"></div>
+        <button className="btn navbar-btn line_btn" onClick={logout}>Logout</button>
+      </div>
+    </li>
+  );
+}
+
+const UnauthenticatedDropDown = () => {
+  const { instance } = useMsal();
+
+  const login = () => {
+    instance.loginRedirect();
+  }
+
+  return (
+    <li className="nav-item">
+      <button className="btn navbar-btn line_btn" onClick={login}>Login</button>
+    </li>
+  );
+}
+
+export const App = () => {
 
   return (
     <Router>
@@ -36,41 +74,13 @@ export default function App() {
                 </li>
               </ul>
               <ul className="navbar-nav">
+                <AuthenticatedTemplate>
+                  <AuthenticatedDropDown />
+                </AuthenticatedTemplate>
 
-                <AzureAD provider={authProvider} forceLogin={false}>
-                  {
-                    ({ login, logout, authenticationState, error, accountInfo }) => {
-                      switch (authenticationState) {
-                        case AuthenticationState.Authenticated:
-                          return (
-                            <li className="nav-item dropdown">
-                              <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {accountInfo.account.name}</a>
-                              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item" href="/my-account">My Account</a>
-                                <div className="dropdown-divider"></div>
-                                <button className="btn navbar-btn line_btn" onClick={logout}>Logout</button>
-                              </div>
-                            </li>
-                          );
-                        case AuthenticationState.Unauthenticated:
-                          return (
-                            <li className="nav-item">
-                              <button className="btn navbar-btn line_btn" onClick={login}>Login</button>
-                            </li>
-                          );
-                        case AuthenticationState.InProgress:
-                          return (
-                            <li className="nav-item">
-                              Logging in ...
-                            </li>
-                          );
-                        default:
-                          break;
-                      }
-                    }
-                  }
-                </AzureAD>
+                <UnauthenticatedTemplate>
+                  <UnauthenticatedDropDown />
+                </UnauthenticatedTemplate>
               </ul>
             </div>
           </nav>
