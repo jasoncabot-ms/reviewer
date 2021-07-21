@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: reviewer-api
-        image: ghcr.io/jasoncabot-ms/reviewer/api:v1.2
+        image: ghcr.io/jasoncabot-ms/reviewer/api:v1.3
         ports:
         - containerPort: 5000
         env:
@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
       - name: reviewer-ui
-        image: ghcr.io/jasoncabot-ms/reviewer/ui:v1.2
+        image: ghcr.io/jasoncabot-ms/reviewer/ui:v1.3
         ports:
         - containerPort: 3000
         env:
