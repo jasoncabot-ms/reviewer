@@ -10,5 +10,7 @@ EXPOSE 3000
 
 # Production default values, can be overridden during runtime
 ENV API_ENDPOINT=https://reviewerapi.mrcabot.com/api
+ENV CLIENT_ID=df068761-b323-4309-ae7a-2fd1abc2780c
+ENV AUTHORITY=https://login.microsoftonline.com/common
 
 CMD ["/bin/sh", "-c", "/usr/share/nginx/runtime-env.sh && nginx -g \"daemon off;\""]

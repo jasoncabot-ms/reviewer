@@ -7,8 +7,8 @@ import { MsalProvider } from "@azure/msal-react";
 
 export const msalConfig = {
     auth: {
-        clientId: "df068761-b323-4309-ae7a-2fd1abc2780c",
-        authority: "https://login.microsoftonline.com/common",
+        clientId: window.ENV.CLIENT_ID,
+        authority: window.ENV.AUTHORITY,
         redirectUri: document.location.protocol + "//" + document.location.host + "/",
         postLogoutRedirectUri: document.location.protocol + "//" + document.location.host + "/",
     },

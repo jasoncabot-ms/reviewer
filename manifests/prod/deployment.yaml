@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: reviewer-api
-        image: ghcr.io/jasoncabot-ms/reviewer/api:v1.3
+        image: ghcr.io/jasoncabot-ms/reviewer/api:v1.4
         ports:
         - containerPort: 5000
         env:
@@ -47,9 +47,14 @@ spec:
     spec:
       containers:
       - name: reviewer-ui
-        image: ghcr.io/jasoncabot-ms/reviewer/ui:v1.3
+        image: ghcr.io/jasoncabot-ms/reviewer/ui:v1.4
         ports:
         - containerPort: 3000
         env:
         - name: "API_ENDPOINT"
           value: "https://reviewerapi.mrcabot.com/api"
+        - name: "CLIENT_ID"
+          value: "df068761-b323-4309-ae7a-2fd1abc2780c"
+        - name: "AUTHORITY"
+          value: "https://login.microsoftonline.com/common"
+
