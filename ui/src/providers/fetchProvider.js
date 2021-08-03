@@ -30,7 +30,7 @@ const currentAccessToken = async () => {
         return undefined;
     }
     const request = {
-        scopes: ["api://reviewer.mrcabot.com/user_impersonation"],
+        scopes: [`${window.ENV.SCOPE}`],
         account: activeAccount || accounts[0]
     };
 

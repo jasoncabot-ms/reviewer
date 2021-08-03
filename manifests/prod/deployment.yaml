@@ -57,4 +57,5 @@ spec:
           value: "df068761-b323-4309-ae7a-2fd1abc2780c"
         - name: "AUTHORITY"
           value: "https://login.microsoftonline.com/common"
-
+        - name: "SCOPE"
+          value: "api://reviewer.mrcabot.com/user_impersonation"

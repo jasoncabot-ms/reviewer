@@ -4,7 +4,8 @@ cat > /usr/share/nginx/html/config.js << EOF
 window.ENV = {
     API_ENDPOINT: '${API_ENDPOINT}',
     CLIENT_ID: '${CLIENT_ID}',
-    AUTHORITY: '${AUTHORITY}'
+    AUTHORITY: '${AUTHORITY}',
+    SCOPE: '${SCOPE}'
 };
 EOF
 
