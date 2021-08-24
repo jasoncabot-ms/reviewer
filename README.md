@@ -1,13 +1,17 @@
-Here is the overview:
+# Reviewer
 
-UI Flow:
+## App Architecture
 
-Browser -> Web API -> DB
-
-DB Schema:
-Items >-- Review
+![simple web app architecture](https://user-images.githubusercontent.com/51163690/130647736-32f9a540-fe2f-4057-9a9f-9286e5280c6f.png)
 
 
+## Database
+
+
+![one item has many reviews diagram](https://user-images.githubusercontent.com/51163690/130648496-4b9b8b38-d395-4ee2-8c3f-b6d4bef5697d.png)
+
+
+## Azure AD
 
 Create an app for the frontend UI. After creation change the access token version in the manifest to v2. Ensure that reply-urls are set as SPA rather than Web.
 
@@ -42,10 +46,9 @@ az identity create -g rg-reviewer -n id-reviewer-ui
 ```
 
 - grant RBAC to blob storage - Azure Blob Data Contributor
-- create contained user in Azure SQL
 
 
-# GitHub Actions
+## Deployment
 
 Create a service principal with 'only' contributor access to our cluster that GitHub can assume and deploy our resources
 
