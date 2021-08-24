@@ -1,5 +1,13 @@
 # Reviewer
 
+A real-world application that allows people to sign in using Azure AD and use an API to write to a SQL database and Blob Storage.
+
+All hardcoded aspects are externalised as configuration to allow deployment and customisation in a variety of scenarios.
+
+Now whilst the application itself doesn't do much, it serves as a good example of how to model a real-world, secure application.
+
+No secrets were stored during the making of this repository
+
 ## App Architecture
 
 ![simple web app architecture](https://user-images.githubusercontent.com/51163690/130647736-32f9a540-fe2f-4057-9a9f-9286e5280c6f.png)
